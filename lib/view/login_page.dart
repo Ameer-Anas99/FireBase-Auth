@@ -1,5 +1,7 @@
+import 'package:chat_app/components/button.dart';
 import 'package:chat_app/components/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -9,40 +11,87 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final emailTextController = TextEditingController();
   final passwordTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.blueGrey,
       body: SafeArea(
         child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 50,
-              ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 22),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //  logo
+                const Icon(
+                  Icons.lock,
+                  size: 100,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                // welcome messsage
 
-              //  logo
-              Icon(
-                Icons.lock,
-                size: 100,
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              // welcome messsage
+                const Text(
+                  "Welcome Back",
+                  style: TextStyle(fontSize: 30),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
 
-              Text("Welcome Back"),
-              SizedBox(
-                height: 30,
-              ), 
+                // email textfield
 
-           // email texfield
-              
-              MyTextField(controller: emailTextController, hintText: , obsureText: obsureText)
-            ],
+                TextFieldPage(
+                    controller: emailTextController,
+                    hintText: "Email",
+                    obsureText: false),
+
+                const SizedBox(
+                  height: 10,
+                ),
+
+                //  password textfield
+
+                TextFieldPage(
+                    controller: passwordTextController,
+                    hintText: "Password",
+                    obsureText: true),
+
+                const SizedBox(
+                  height: 15,
+                ),
+
+                // Sign in button
+
+                ButtonPage(onTap: () {}, text: "Sign in"),
+
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Not a member?"),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Text(
+                        "Register now",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            color: Colors.lightBlue),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
