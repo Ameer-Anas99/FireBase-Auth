@@ -2,17 +2,16 @@ import 'package:chat_app/components/button.dart';
 import 'package:chat_app/components/text_field.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final emailTextController = TextEditingController();
   final passwordTextController = TextEditingController();
-  final confirmPasswordTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
                 // welcome messsage
 
                 const Text(
-                  "Welcome Back",
+                  "Lets create an account for you",
                   style: TextStyle(fontSize: 30),
                 ),
                 const SizedBox(
@@ -65,9 +64,18 @@ class _LoginPageState extends State<LoginPage> {
                   height: 15,
                 ),
 
+                TextFieldPage(
+                    controller: passwordTextController,
+                    hintText: "Conform Password",
+                    obsureText: true),
+
+                const SizedBox(
+                  height: 15,
+                ),
+
                 // Sign in button
 
-                ButtonPage(onTap: () {}, text: "Sign in"),
+                ButtonPage(onTap: () {}, text: "Sign up"),
 
                 const SizedBox(
                   height: 20,
@@ -76,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Not a member?",
+                      "Already have an account?",
                       style:
                           TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                     ),
@@ -86,13 +94,13 @@ class _LoginPageState extends State<LoginPage> {
                     GestureDetector(
                       onTap: () {},
                       child: const Text(
-                        "Register now",
+                        "Login now",
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
                             color: Colors.lightBlue),
                       ),
-                    ),
+                    )
                   ],
                 )
               ],
