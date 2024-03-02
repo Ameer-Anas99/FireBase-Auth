@@ -3,7 +3,8 @@ import 'package:chat_app/components/text_field.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+  final Function()? onTap;
+  const RegisterPage({super.key, required this.onTap});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -92,7 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       width: 8,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: widget.onTap,
                       child: const Text(
                         "Login now",
                         style: TextStyle(
