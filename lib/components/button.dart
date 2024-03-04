@@ -12,16 +12,19 @@ class ButtonPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-          color: Colors.black, borderRadius: BorderRadius.circular(10)),
-      child: Center(
-          child: Text(
-        text,
-        style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.w500, fontSize: 25),
-      )),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+            color: Colors.black, borderRadius: BorderRadius.circular(10)),
+        child: Center(
+            child: Text(
+          text,
+          style: const TextStyle(
+              color: Colors.white, fontWeight: FontWeight.w500, fontSize: 25),
+        )),
+      ),
     );
   }
 }
