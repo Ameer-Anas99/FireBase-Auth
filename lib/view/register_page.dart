@@ -1,5 +1,6 @@
 import 'package:chat_app/components/button.dart';
 import 'package:chat_app/components/text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -14,6 +15,55 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailTextController = TextEditingController();
   final passwordTextController = TextEditingController();
   final confirmPasswordTextController = TextEditingController();
+// sign user up
+  void signUp() async {
+    // show loading circle
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
+    // make sure passwords match
+    if (passwordTextController.text != confirmPasswordTextController.text) {
+      // pop loading error
+      Navigator.pop(context);
+
+      // show error to circle
+      Navigator.pop(context);
+
+      // show error to user
+      displayMessage("Passwords don`t match!");
+      return;
+    }
+
+    // try creating the user
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailTextController.text,
+          password: passwordTextController.text);
+
+      // pop loading circle
+      if (context.mounted) Navigator.pop(context);
+    } on FirebaseException catch (e) {
+      // pop loading circle
+      Navigator.pop(context);
+
+      // show error to user
+      displayMessage(e.code);
+    }
+  }
+
+  // display a dialog message
+  void displayMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(message),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
 
                 TextFieldPage(
-                    controller: passwordTextController,
+                    controller: confirmPasswordTextController,
                     hintText: "Conform Password",
                     obsureText: true),
 
@@ -77,7 +127,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 // Sign in button
 
-                ButtonPage(onTap: () {}, text: "Sign up"),
+                ButtonPage(onTap: signUp, text: "Sign up"),
 
                 const SizedBox(
                   height: 20,
