@@ -25,19 +25,24 @@ class _HomePageState extends State<HomePage> {
 
   // post message
   void postMessage() {
+    // only post if
     if (textController.text.isNotEmpty) {
       FirebaseFirestore.instance.collection("User Posts").add({
-        "useREmail": currentUser.email,
+        "UserEmail": currentUser.email,
         "Message": textController.text,
         "TimeStamp": Timestamp.now(),
       });
     }
+    // clear the textfield
+    setState(() {
+      textController.clear();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: const Color.fromARGB(255, 52, 91, 110),
+      backgroundColor: const Color.fromARGB(255, 52, 91, 110),
       appBar: AppBar(
         title: const Center(child: Text("Chat App")),
         actions: [
@@ -55,17 +60,17 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: StreamBuilder(
                 stream: FirebaseFirestore.instance
-                    .collection("")
+                    .collection("User Posts")
                     .orderBy(
-                      "",
+                      "TimeStamp",
                       descending: false,
                     )
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
-                        // get the message
                         final post = snapshot.data!.docs[index];
                         return PostPage(
                           message: post["Message"],
@@ -93,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     child: TextFieldPage(
                         controller: textController,
-                        hintText: "Write something on the wall..",
+                        hintText: "Write something ...",
                         obsureText: false),
                   ),
                   IconButton(
@@ -103,7 +108,13 @@ class _HomePageState extends State<HomePage> {
             ),
 
             // logged in as
-            Text("Logged in as:" + currentUser.email!)
+            Text(
+              "Logged in as:" + currentUser.email!,
+              style: TextStyle(color: Colors.black, fontSize: 15),
+            ),
+            SizedBox(
+              height: 50,
+            )
           ],
         ),
       ),

@@ -95,9 +95,10 @@ class _LoginPageState extends State<LoginPage> {
                 //  password textfield
 
                 TextFieldPage(
-                    controller: passwordTextController,
-                    hintText: "Password",
-                    obsureText: true),
+                  controller: passwordTextController,
+                  hintText: "Password",
+                  obsureText: true,
+                ),
 
                 const SizedBox(
                   height: 15,
