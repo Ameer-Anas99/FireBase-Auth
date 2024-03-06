@@ -85,7 +85,10 @@ class _PostPageState extends State<PostPage> {
               ),
 
               // like count
-              Text(widget.likes.length.toString()),
+              Text(
+                widget.likes.length.toString(),
+                style: TextStyle(color: Colors.grey),
+              ),
             ],
           ),
           SizedBox(
