@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage> {
         "UserEmail": currentUser.email,
         "Message": textController.text,
         "TimeStamp": Timestamp.now(),
+        "Likes": [],
       });
     }
     // clear the textfield
@@ -75,6 +76,8 @@ class _HomePageState extends State<HomePage> {
                         return PostPage(
                           message: post["Message"],
                           user: post["UserEmail"],
+                          postId: post.id,
+                          likes: List<String>.from(post['Likes'] ?? []),
                         );
                       },
                     );
@@ -110,10 +113,13 @@ class _HomePageState extends State<HomePage> {
             // logged in as
             Text(
               "Logged in as:" + currentUser.email!,
-              style: TextStyle(color: Colors.black, fontSize: 15),
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500),
             ),
             SizedBox(
-              height: 50,
+              height: 20,
             )
           ],
         ),
