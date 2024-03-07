@@ -22,7 +22,7 @@ class TextFieldPage extends StatelessWidget {
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
           ),
-          fillColor: Colors.grey.shade300,
+          fillColor: Colors.white,
           filled: true,
           hintText: hintText,
           hintStyle: const TextStyle(color: Colors.grey)),

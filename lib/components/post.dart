@@ -25,7 +25,6 @@ class _PostPageState extends State<PostPage> {
   bool isLiked = false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     isLiked = widget.likes.contains(currentUser.email);
   }
@@ -63,16 +62,6 @@ class _PostPageState extends State<PostPage> {
       padding: const EdgeInsets.all(20),
       child: Row(
         children: [
-          // // profile pic
-          // Container(
-          //   decoration: const BoxDecoration(
-          //       shape: BoxShape.circle, color: Colors.blueGrey),
-          //   padding: EdgeInsets.all(10),
-          //   child: Icon(
-          //     Icons.person,
-          //     color: Colors.white,
-          //   ),
-          // ),
           // Like Button
           Column(
             children: [
@@ -87,11 +76,11 @@ class _PostPageState extends State<PostPage> {
               // like count
               Text(
                 widget.likes.length.toString(),
-                style: TextStyle(color: Colors.grey),
+                style: const TextStyle(color: Colors.grey),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             width: 20,
           ),
           // message and user email
@@ -100,9 +89,9 @@ class _PostPageState extends State<PostPage> {
             children: [
               Text(
                 widget.user,
-                style: TextStyle(color: Colors.teal),
+                style: const TextStyle(color: Colors.teal),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 3,
               ),
               Text(widget.message),

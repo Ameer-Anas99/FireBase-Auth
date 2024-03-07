@@ -20,7 +20,7 @@ class ListTilePage extends StatelessWidget {
         onTap: onTap,
         title: Text(
           text,
-          style: TextStyle(color: Colors.black, fontSize: 20),
+          style: const TextStyle(color: Colors.black, fontSize: 20),
         ),
       ),
     );

@@ -97,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text("Error:${snapshot.error}"),
                     );
                   }
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 },
@@ -116,20 +116,25 @@ class _HomePageState extends State<HomePage> {
                         obsureText: false),
                   ),
                   IconButton(
-                      onPressed: postMessage, icon: Icon(Icons.arrow_circle_up))
+                      onPressed: postMessage,
+                      icon: const Icon(
+                        Icons.arrow_circle_up,
+                        size: 30,
+                        color: Colors.white,
+                      ))
                 ],
               ),
             ),
 
             // logged in as
             Text(
-              "Logged in as:" + currentUser.email!,
-              style: TextStyle(
+              "Logged in as:${currentUser.email!}",
+              style: const TextStyle(
                   color: Colors.black,
                   fontSize: 15,
                   fontWeight: FontWeight.w500),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             )
           ],
