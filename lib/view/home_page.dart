@@ -1,5 +1,7 @@
+import 'package:chat_app/components/drawer.dart';
 import 'package:chat_app/components/post.dart';
 import 'package:chat_app/components/text_field.dart';
+import 'package:chat_app/view/profile_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -40,19 +42,28 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  // navigate to profile page
+  void goToProfilePage() {
+    // pop menu drawer
+    Navigator.pop(context);
+    // go to profile page
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ProfilePage(),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 52, 91, 110),
       appBar: AppBar(
         title: const Center(child: Text("Chat App")),
-        actions: [
-          // sign out button
-          IconButton(
-            onPressed: signOut,
-            icon: Icon(Icons.logout),
-          ),
-        ],
+      ),
+      drawer: MyDrawer(
+        onProfileTap: goToProfilePage,
+        onSignOut: signOut,
       ),
       body: Center(
         child: Column(
