@@ -7,8 +7,8 @@ class UserAuth {
   UserAuth({
     required this.name,
     required this.email,
-    required this.phonenumber,
     required this.uid,
+    this.phonenumber,
   });
 
   factory UserAuth.fromJson(Map<String, dynamic> json) {
@@ -23,6 +23,7 @@ class UserAuth {
       'name': name,
       'email': email,
       'phonenumber': phonenumber,
+      'uid': uid,
     };
   }
 }
