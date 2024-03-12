@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:chat_app/service/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +42,20 @@ class AuthProvider extends ChangeNotifier {
     Future<UserCredential> signUpWithEmailandPassword(
         String email, password) async {
       return authServices.signUpWithEmailandPassword(email, password);
+    }
+
+    // google sign in
+    Future<UserCredential> signInwithGoogle() async {
+      return authServices.signInWithGoogle();
+    }
+
+    signInwithGithub(context) {
+      return authServices.signInWithGithub(context);
+    }
+
+    otpsetter(value) {
+      otpcode = value;
+      notifyListeners();
     }
   }
 }
