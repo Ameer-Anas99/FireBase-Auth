@@ -63,7 +63,23 @@ class DbService {
   String capitalizedFirstLetter(String text) {
     if (text.isEmpty) {
       return text;
+    }
+    return text.split(' ').map((word) {
+      if (word.isNotEmpty) {
+        return word[0].toUpperCase() + word.substring(1);
+      } else {
+        return word;
+      }
+    }).join(' ');
+  }
 
-    } return text.split(' ').map((word){})
+  Future<List<String>> getUserNames() async {
+    try {
+      QuerySnapshot<Message> snapshot = await messageRef.get();
+      return snapshot.docs.map((docs) => docs.data()?.email ?? "").toList();
+    } catch (e) {
+      print("Error fetching user names : $e");
+      return [];
+    }
   }
 }
