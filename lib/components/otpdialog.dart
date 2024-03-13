@@ -13,7 +13,7 @@ void showOtpDialoge({
       content: Column(
         children: <Widget>[
           const Image(
-            image: AssetImage(""),
+            image: AssetImage("assets/otp.jpg"),
           ),
           TextField(
             controller: codeController,
@@ -42,7 +42,7 @@ class CustomAlertDialog extends StatelessWidget {
     return AlertDialog(
       backgroundColor: Colors.teal,
       content: Image(
-        image: AssetImage(''),
+        image: AssetImage('assets/otp.jpg'),
       ),
       actions: [
         Pinput(

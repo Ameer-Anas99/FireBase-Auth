@@ -89,7 +89,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             );
           } else if (snapshot.hasError) {
-            print("a");
             return Center(
               child: Text("Erro: r${snapshot.error}"),
             );

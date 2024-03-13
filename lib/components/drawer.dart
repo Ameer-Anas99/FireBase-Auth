@@ -1,5 +1,7 @@
 import 'package:chat_app/components/list_tile.dart';
+import 'package:chat_app/controller/auth_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyDrawer extends StatelessWidget {
   final void Function()? onProfileTap;
@@ -9,6 +11,7 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authprovider = Provider.of<AutheProvider>(context, listen: false);
     return Drawer(
       backgroundColor: Colors.blueGrey,
       child: Column(
@@ -38,7 +41,12 @@ class MyDrawer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 30),
             child: ListTilePage(
-                icon: Icons.logout, text: "L o g o u t", onTap: onSignOut),
+                icon: Icons.logout,
+                text: "L o g o u t",
+                onTap: () {
+                  authprovider.signOut();
+                  onSignOut?.call();
+                }),
           )
         ],
       ),

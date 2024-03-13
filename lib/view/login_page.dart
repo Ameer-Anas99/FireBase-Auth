@@ -24,7 +24,7 @@ class LoginPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 80),
+                const SizedBox(height: 35),
                 Padding(
                   padding: const EdgeInsets.all(20),
                   child: Center(
@@ -32,9 +32,9 @@ class LoginPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Lottie.asset(
-                          '', // Replace with the path to your Lottie animation file
-                          height: 100,
-                          width: 100,
+                          'assets/login.json',
+                          height: 143,
+                          width: 143,
                         ),
                         const SizedBox(height: 10),
                       ],
@@ -65,7 +65,6 @@ class LoginPage extends StatelessWidget {
                           controller: provider.passwordController,
                         ),
                         const SizedBox(height: 10),
-
                         const SizedBox(height: 10),
                         ButtonPage(
                           text: "sign",
@@ -101,8 +100,6 @@ class LoginPage extends StatelessWidget {
                                     await provider.signInWithEmailandPassword(
                                         username, password);
 
-                                // Do something with userCredential if needed
-
                                 // User exists, clear controllers
                                 provider.passwordController.clear();
                                 provider.usernameController.clear();
@@ -131,7 +128,6 @@ class LoginPage extends StatelessWidget {
                             }
                           },
                         ),
-
                         const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -140,54 +136,61 @@ class LoginPage extends StatelessWidget {
                                 onTap: () async {
                                   await provider.signInWithGoogle();
                                 },
-                                child: ImgTile(imagePath: "")),
+                                child: const ImgTile(
+                                    imagePath: "assets/google.jpg")),
                             const SizedBox(width: 10),
                             GestureDetector(
                                 onTap: () {
                                   provider.signInWithGithub(context);
                                 },
-                                child: ImgTile(imagePath: "")),
+                                child: const ImgTile(
+                                    imagePath: "assets/github.jpg")),
                             const SizedBox(width: 10),
                             GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => PhoneSignIn(),
+                                    builder: (context) => const PhoneSignIn(),
                                   ));
                                 },
-                                child: ImgTile(imagePath: "")),
+                                child:
+                                    const ImgTile(imagePath: "assets/otp.jpg")),
                           ],
                         ),
-                        const SizedBox(height: 10),
-                        const Text(
-                          "Don't have an account? Create one",
-                          style: TextStyle(
-                            color: Colors.black87,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(
-                            height: 10), // Add some space after the text
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RegisterPage(
-                                  onTap: () {},
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            child: const Text(
-                              "Register Now",
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              "Don't have an account?",
                               style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 15,
+                                color: Colors.black87,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
+                            Row(
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    provider.usernameController.clear();
+                                    provider.passwordController.clear();
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              RegisterPage(onTap: () {}),
+                                        ));
+                                  },
+                                  child: const Text(
+                                    "Create one",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.blue),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
                         ),
                       ],
                     ),

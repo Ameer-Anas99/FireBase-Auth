@@ -11,7 +11,7 @@ class ImgTile extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(color: Colors.white),
         borderRadius: BorderRadius.circular(16),
-        color: Colors.grey[200],
+        color: Colors.white,
       ),
       child: Image.asset(
         imagePath,

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:chat_app/components/otpdialog.dart';
 import 'package:chat_app/components/snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';

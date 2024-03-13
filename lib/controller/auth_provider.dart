@@ -15,8 +15,8 @@ class AutheProvider extends ChangeNotifier {
 
   bool showLoginPage = true;
   final isGoogleLoading = false;
-
   User? _user;
+
   User? get user => _user;
 
   void togglepages() {
@@ -26,7 +26,7 @@ class AutheProvider extends ChangeNotifier {
 
   // sign out
   Future<void> signOut() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signOut();
+    await GoogleSignIn().signOut();
     FirebaseAuth.instance.signOut();
     notifyListeners();
   }
@@ -52,7 +52,7 @@ class AutheProvider extends ChangeNotifier {
     return authServices.signInWithGithub(context);
   }
 
-  otpSetter(value) {
+  void otpSetter(value) {
     otpcode = value;
     notifyListeners();
   }

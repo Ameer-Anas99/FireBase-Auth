@@ -35,7 +35,7 @@ class RegisterPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Lottie.asset(
-                              'chat_app/assets/Animation',
+                              'assets/register.json',
                               height: 100,
                               width: 100,
                             ),
@@ -117,7 +117,7 @@ class RegisterPage extends StatelessWidget {
                                 value.conformpasswordController.text) {
                               try {
                                 // If they match, call the RegisterPageWithEmailandPassword method
-                                (
+                                await value.signUpWithEmailandPassword(
                                   value.usernameController.text,
                                   value.passwordController.text,
                                 );
@@ -158,7 +158,7 @@ class RegisterPage extends StatelessWidget {
                             }
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         ButtonPage(
