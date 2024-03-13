@@ -35,7 +35,7 @@ class RegisterPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Lottie.asset(
-                              '',
+                              'chat_app/assets/Animation',
                               height: 100,
                               width: 100,
                             ),
