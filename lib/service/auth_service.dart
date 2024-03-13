@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:chat_app/model/model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +9,7 @@ class AuthServices {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<UserCredential> signInEmailandPassword(
+  Future<UserCredential> signInWithEmailandPassword(
       String email, String password) async {
     try {
       // sign in

@@ -4,7 +4,7 @@ class ButtonPage extends StatelessWidget {
   final Function()? onTap;
   final String text;
 
-  const ButtonPage({
+  ButtonPage({
     super.key,
     required this.onTap,
     required this.text,

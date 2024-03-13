@@ -1,175 +1,178 @@
 import 'package:chat_app/components/button.dart';
-import 'package:chat_app/components/text_field.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:chat_app/components/text_form.dart';
+import 'package:chat_app/controller/auth_provider.dart';
+import 'package:chat_app/view/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
-class RegisterPage extends StatefulWidget {
-  final Function()? onTap;
-  const RegisterPage({super.key, required this.onTap});
-
-  @override
-  State<RegisterPage> createState() => _RegisterPageState();
-}
-
-class _RegisterPageState extends State<RegisterPage> {
-  final emailTextController = TextEditingController();
-  final passwordTextController = TextEditingController();
-  final confirmPasswordTextController = TextEditingController();
-// sign user up
-  void signUp() async {
-    // show loading circle
-    showDialog(
-      context: context,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-
-    // make sure passwords match
-    if (passwordTextController.text != confirmPasswordTextController.text) {
-      // pop loading error
-      Navigator.pop(context);
-
-      // show error to circle
-      Navigator.pop(context);
-
-      // show error to user
-      displayMessage("Passwords don`t match!");
-      return;
-    }
-
-    // try creating the user
-    try {
-      // create the user
-
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: emailTextController.text,
-              password: passwordTextController.text);
-
-      // after creating the user,create a new document in cloud firestore called Users
-      FirebaseFirestore.instance
-          .collection("Users")
-          .doc(userCredential.user!.email)
-          .set({
-        "Username": emailTextController.text.split('@')[0], // initial username
-        'bio': 'Empty bio..' // initially empty bio
-        // add any additional field as needed
-      });
-      // pop loading circle
-      if (context.mounted) Navigator.pop(context);
-    } on FirebaseException catch (e) {
-      // pop loading circle
-      Navigator.pop(context);
-
-      // show error to user
-      displayMessage(e.code);
-    }
-  }
-
-  // display a dialog message
-  void displayMessage(String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(message),
-      ),
-    );
-  }
+class RegisterPage extends StatelessWidget {
+  RegisterPage({Key? key, required void Function() onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.blueGrey,
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 22),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                //  logo
-                const Icon(
-                  Icons.lock,
-                  size: 100,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                // welcome messsage
-
-                const Text(
-                  "Lets create an account for you",
-                  style: TextStyle(fontSize: 30),
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-
-                // email textfield
-
-                TextFieldPage(
-                    controller: emailTextController,
-                    hintText: "Email",
-                    obsureText: false),
-
-                const SizedBox(
-                  height: 10,
-                ),
-
-                //  password textfield
-
-                TextFieldPage(
-                    controller: passwordTextController,
-                    hintText: "Password",
-                    obsureText: true),
-
-                const SizedBox(
-                  height: 15,
-                ),
-
-                TextFieldPage(
-                    controller: confirmPasswordTextController,
-                    hintText: "Conform Password",
-                    obsureText: true),
-
-                const SizedBox(
-                  height: 15,
-                ),
-
-                // Sign in button
-
-                ButtonPage(onTap: signUp, text: "Sign up"),
-
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+      body: Container(
+        decoration: const BoxDecoration(),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
                   children: [
-                    const Text(
-                      "Already have an account?",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    GestureDetector(
-                      onTap: widget.onTap,
-                      child: const Text(
-                        "Login now",
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.lightBlue),
+                    const SizedBox(width: 100),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Lottie.asset(
+                              '',
+                              height: 100,
+                              width: 100,
+                            ),
+                            const SizedBox(height: 10),
+                          ],
+                        ),
                       ),
-                    )
+                    ),
                   ],
-                )
-              ],
-            ),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(60),
+                    topRight: Radius.circular(60),
+                  ),
+                ),
+                child: Consumer<AutheProvider>(
+                  builder: (context, value, child) => Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        TextForm(
+                          hinttext: 'Gmail',
+                          obscureText: true,
+                          controller: value.usernameController,
+                        ),
+                        TextForm(
+                          hinttext: 'Password',
+                          obscureText: true,
+                          controller: value.passwordController,
+                        ),
+                        TextForm(
+                          hinttext: 'Confirm Password',
+                          obscureText: true,
+                          controller: value.conformpasswordController,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        ButtonPage(
+                          text: "Register",
+                          onTap: () async {
+                            // Check if any field is empty
+                            if (value.usernameController.text.isEmpty ||
+                                value.passwordController.text.isEmpty ||
+                                value.conformpasswordController.text.isEmpty) {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text("Error"),
+                                    content: const Text(
+                                        "All fields must be filled out."),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text("OK"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              return;
+                            }
+
+                            // Check if the password and confirmation password match
+                            if (value.passwordController.text ==
+                                value.conformpasswordController.text) {
+                              try {
+                                // If they match, call the RegisterPageWithEmailandPassword method
+                                (
+                                  value.usernameController.text,
+                                  value.passwordController.text,
+                                );
+                                value.usernameController.clear();
+                                value.passwordController.clear();
+                                value.conformpasswordController.clear();
+
+                                // Navigate to the home screen after successful account creation
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomePage()),
+                                );
+                              } catch (e) {
+                                // Handle any errors that occur during account creation
+                                print("Error creating account: $e");
+                              }
+                            } else {
+                              // If passwords don't match, show an error message
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text("Error"),
+                                    content:
+                                        const Text("Passwords do not match."),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text("OK"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        ButtonPage(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          text: "Back",
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

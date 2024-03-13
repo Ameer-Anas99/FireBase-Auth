@@ -1,11 +1,9 @@
-import 'dart:js';
-
 import 'package:chat_app/service/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class AuthProvider extends ChangeNotifier {
+class AutheProvider extends ChangeNotifier {
   // change variable name
   AuthServices authServices = AuthServices();
   String? otpcode;
@@ -24,38 +22,38 @@ class AuthProvider extends ChangeNotifier {
   void togglepages() {
     showLoginPage = !showLoginPage;
     notifyListeners();
+  }
 
-    // sign out
-    Future<void> signOut() async {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signOut();
-      FirebaseAuth.instance.signOut();
-      notifyListeners();
-    }
+  // sign out
+  Future<void> signOut() async {
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signOut();
+    FirebaseAuth.instance.signOut();
+    notifyListeners();
+  }
 
 // sign in
-    Future<UserCredential> signInWithEmailandPassword(
-        String email, String password) async {
-      return authServices.signInEmailandPassword(email, password);
-    }
+  Future<UserCredential> signInWithEmailandPassword(
+      String email, String password) async {
+    return authServices.signInWithEmailandPassword(email, password);
+  }
 
-    // sign up
-    Future<UserCredential> signUpWithEmailandPassword(
-        String email, password) async {
-      return authServices.signUpWithEmailandPassword(email, password);
-    }
+  // sign up
+  Future<UserCredential> signUpWithEmailandPassword(
+      String email, password) async {
+    return authServices.signUpWithEmailandPassword(email, password);
+  }
 
-    // google sign in
-    Future<UserCredential> signInwithGoogle() async {
-      return authServices.signInWithGoogle();
-    }
+  // google sign in
+  Future<UserCredential> signInWithGoogle() async {
+    return authServices.signInWithGoogle();
+  }
 
-    signInwithGithub(context) {
-      return authServices.signInWithGithub(context);
-    }
+  signInWithGithub(context) {
+    return authServices.signInWithGithub(context);
+  }
 
-    otpsetter(value) {
-      otpcode = value;
-      notifyListeners();
-    }
+  otpSetter(value) {
+    otpcode = value;
+    notifyListeners();
   }
 }
