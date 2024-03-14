@@ -31,7 +31,7 @@ class TextForm extends StatelessWidget {
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
           ),
-          fillColor: Color.fromARGB(255, 223, 222, 222),
+          fillColor: const Color.fromARGB(255, 223, 222, 222),
           filled: true,
           hintText: hinttext,
         ),

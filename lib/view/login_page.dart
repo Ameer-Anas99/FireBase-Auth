@@ -1,8 +1,8 @@
 import 'package:chat_app/components/button.dart';
 import 'package:chat_app/components/img_tile.dart';
-import 'package:chat_app/components/otp.dart';
 import 'package:chat_app/components/text_form.dart';
 import 'package:chat_app/controller/auth_provider.dart';
+import 'package:chat_app/view/mobile_no_screen.dart';
 import 'package:chat_app/view/register_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -133,9 +133,7 @@ class LoginPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             GestureDetector(
-                                onTap: () async {
-                                  await provider.signInWithGoogle();
-                                },
+                                onTap: provider.signInWithGoogle,
                                 child: const ImgTile(
                                     imagePath: "assets/google.jpg")),
                             const SizedBox(width: 10),
@@ -149,7 +147,8 @@ class LoginPage extends StatelessWidget {
                             GestureDetector(
                                 onTap: () {
                                   Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const PhoneSignIn(),
+                                    builder: (context) =>
+                                        const MobileNumberScreen(),
                                   ));
                                 },
                                 child:

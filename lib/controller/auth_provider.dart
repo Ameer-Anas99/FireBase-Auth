@@ -44,16 +44,23 @@ class AutheProvider extends ChangeNotifier {
   }
 
   // google sign in
-  Future<UserCredential> signInWithGoogle() async {
-    return authServices.signInWithGoogle();
-  }
+  Future<void> signInWithGoogle() async {
+    GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+    GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+    AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
 
-  signInWithGithub(context) {
-    return authServices.signInWithGithub(context);
-  }
-
-  void otpSetter(value) {
-    otpcode = value;
+    print(userCredential.user?.displayName);
     notifyListeners();
+  }
+
+  Future<UserCredential> signInWithGithub(githubAuthProvider) async {
+    GithubAuthProvider githubAuthProvider = GithubAuthProvider();
+    notifyListeners();
+    return await FirebaseAuth.instance.signInWithProvider(githubAuthProvider);
   }
 }

@@ -76,7 +76,7 @@ class DbService {
   Future<List<String>> getUserNames() async {
     try {
       QuerySnapshot<Message> snapshot = await messageRef.get();
-      return snapshot.docs.map((docs) => docs.data()?.email ?? "").toList();
+      return snapshot.docs.map((docs) => docs.data().email ?? "").toList();
     } catch (e) {
       print("Error fetching user names : $e");
       return [];

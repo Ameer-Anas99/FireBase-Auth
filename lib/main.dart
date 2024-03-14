@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           create: (context) => PostProvider(),
         )
       ],
-      child: MaterialApp(
+      child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: AuthPage(),
       ),

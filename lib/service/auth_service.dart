@@ -2,7 +2,6 @@ import 'package:chat_app/model/model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthServices {
   String collection = 'User Post';
@@ -33,29 +32,6 @@ class AuthServices {
     } on FirebaseAuthMultiFactorException catch (e) {
       throw Exception(e.code);
     }
-  }
-
-  //google sign in
-  Future<UserCredential> signInWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-//Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    //create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-
-    UserCredential user =
-        await FirebaseAuth.instance.signInWithCredential(credential);
-    User? guser = user.user;
-    final UserAuth userdata = UserAuth(
-        name: guser?.displayName, email: guser?.email, uid: guser?.uid);
-    firestore.collection(collection).doc(guser?.uid).set(userdata.toJson());
-    return user;
   }
 
 // gitup

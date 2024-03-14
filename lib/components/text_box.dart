@@ -31,7 +31,7 @@ class TextBoxPage extends StatelessWidget {
                 selectionName,
                 style: const TextStyle(color: Color.fromARGB(255, 87, 87, 87)),
               ),
-              IconButton(onPressed: () {}, icon: Icon(Icons.edit))
+              IconButton(onPressed: () {}, icon: const Icon(Icons.edit))
             ],
           ),
           Text(

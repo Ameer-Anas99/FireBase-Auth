@@ -129,7 +129,7 @@ class RegisterPage extends StatelessWidget {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => HomePage()),
+                                      builder: (context) => const HomePage()),
                                 );
                               } catch (e) {
                                 // Handle any errors that occur during account creation
