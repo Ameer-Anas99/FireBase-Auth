@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   final textController = TextEditingController();
 
   // sign out
-  void signOut() {
+  void signOutLogin() {
     FirebaseAuth.instance.signOut();
   }
 
@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: MyDrawer(
         onProfileTap: goToProfilePage,
-        onSignOut: signOut,
+        onSignOut: signOutLogin,
       ),
       body: Center(
         child: Column(

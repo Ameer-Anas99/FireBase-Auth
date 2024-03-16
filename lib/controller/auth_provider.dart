@@ -25,7 +25,7 @@ class AutheProvider extends ChangeNotifier {
   }
 
   // sign out
-  Future<void> signOut() async {
+  Future<void> signOutLogin() async {
     await GoogleSignIn().signOut();
     FirebaseAuth.instance.signOut();
     notifyListeners();

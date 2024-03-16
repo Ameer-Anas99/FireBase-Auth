@@ -26,7 +26,9 @@ class _PostPageState extends State<PostPage> {
   @override
   void initState() {
     super.initState();
-    isLiked = widget.likes.contains(currentUser.email);
+    if (currentUser != null) {
+      isLiked = widget.likes.contains(currentUser.email);
+    }
   }
 
   // toggle like

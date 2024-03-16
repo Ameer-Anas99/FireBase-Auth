@@ -44,7 +44,7 @@ class MyDrawer extends StatelessWidget {
                 icon: Icons.logout,
                 text: "L o g o u t",
                 onTap: () {
-                  authprovider.signOut();
+                  authprovider.signOutLogin();
                   onSignOut?.call();
                 }),
           )
