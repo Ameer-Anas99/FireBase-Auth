@@ -1,102 +1,107 @@
+// ignore_for_file: use_build_context_synchronously
 import 'package:chat_app/components/text_box.dart';
+import 'package:chat_app/controller/profile_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
 
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
-  // user
-  final currentUser = FirebaseAuth.instance.currentUser!;
-
-  // edit field
-  Future<void> editField(String field) async {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       appBar: AppBar(
-        title: const Padding(
-          padding: EdgeInsets.only(left: 100.0),
-          child: Text("Profile "),
+        title: Text(
+          'Profile',
+          style: TextStyle(color: Colors.black),
         ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
-      body: StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection("Users")
-            .doc(currentUser.email)
-            .snapshots(),
-        builder: (context, snapshot) {
-          // get user data
-          if (snapshot.hasData && snapshot.data!.data() != null) {
-            final userData = snapshot.data!.data()! as Map<String, dynamic>;
-            return ListView(
-              children: [
-                const SizedBox(
-                  height: 40,
-                ),
-                // profile pic
-                const Icon(
-                  Icons.person_2_outlined,
-                  size: 100,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                // user email
-                Text(
-                  currentUser.email!,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.black, fontSize: 17),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 15),
-                  child: Text(
-                    "My Details",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+      body: Consumer<ProfileProvider>(
+        builder: (context, value, child) => StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection('Users')
+              .doc(value.currentUser.email)
+              .snapshots(),
+          builder: (context, snapshot) {
+            //get the user data
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              print("Waiting for data...");
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              print("Error: ${snapshot.error}");
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              final userData = snapshot.data?.data() as Map<String, dynamic>?;
+
+              if (userData == null || userData.isEmpty) {
+                print("No user data found.");
+                return Center(child: Text('No data found.'));
+              }
+              print("User data retrieved successfully: $userData");
+
+              return ListView(
+                children: [
+                  //profile pic
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: CircleAvatar(
+                      backgroundColor: const Color.fromARGB(255, 226, 220, 220),
+                      radius: 50,
+                      child: Image.asset(
+                        'assets/user.png',
+                        height: 50,
+                      ),
+                    ),
                   ),
-                ),
-                // Username
-                TextBoxPage(
-                  text: userData['username'] ?? 'No Data Found',
-                  selectionName: 'username',
-                  onPressed: () => editField('username'),
-                ),
-                // Bio
-                TextBoxPage(
-                  text: userData['bio'],
-                  selectionName: 'bio',
-                  onPressed: () => editField('bio'),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 15),
-                  child: Text(
-                    "My Posts",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                  SizedBox(height: 10),
+                  //user email
+                  Text(
+                    value.currentUser.email!,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                ),
-              ],
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text("Erro: r${snapshot.error}"),
-            );
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+                  SizedBox(height: 10),
+                  //user details
+                  Text(
+                    'My details',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 20),
+                  //username
+                  MyTextBox(
+                    text: userData['username'] ?? '',
+                    sectionName: 'Username',
+                    onPressed: () => value.editFields(
+                        'username', context), // changed to lowercase
+                  ),
+                  //bio
+                  SizedBox(height: 20),
+                  MyTextBox(
+                    text: userData['bio'] ?? '',
+                    sectionName: ' Bio',
+                    onPressed: () => value.editFields(
+                        'bio', context), // changed to lowercase
+                  ),
+                  //user posts
+                  SizedBox(height: 20),
+                  Text(
+                    'My post',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
+              );
+            }
+          },
+        ),
       ),
     );
   }

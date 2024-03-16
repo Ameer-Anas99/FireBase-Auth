@@ -1,42 +1,56 @@
 import 'package:flutter/material.dart';
 
-class TextBoxPage extends StatelessWidget {
+class MyTextBox extends StatelessWidget {
   final String text;
-  final String selectionName;
+  final String sectionName;
   final void Function()? onPressed;
-
-  const TextBoxPage(
-      {super.key,
-      required this.text,
-      required this.selectionName,
-      required this.onPressed});
+  const MyTextBox({
+    super.key,
+    required this.text,
+    required this.sectionName,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(left: 15, right: 15),
+      margin: EdgeInsets.only(left: 40, right: 40),
+      height: 80,
+      width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      padding: const EdgeInsets.only(left: 15, bottom: 15),
-      margin: const EdgeInsets.only(right: 20, left: 20, top: 20),
+          color: Color.fromARGB(255, 230, 225, 225),
+          borderRadius: BorderRadius.circular(15)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          //section name
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // select name
               Text(
-                selectionName,
-                style: const TextStyle(color: Color.fromARGB(255, 87, 87, 87)),
+                sectionName,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(255, 144, 141, 141)),
               ),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.edit))
+              IconButton(
+                  onPressed: onPressed,
+                  icon: Icon(
+                    Icons.edit,
+                    color: const Color.fromARGB(255, 62, 147, 65),
+                  ))
             ],
           ),
-          Text(
-            text,
-            style: const TextStyle(fontSize: 17),
+
+          //texts
+          Padding(
+            padding: const EdgeInsets.only(bottom: 15),
+            child: Text(
+              text,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
