@@ -54,7 +54,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         fontSize: 15, fontWeight: FontWeight.bold),
                     onChanged: (value) {},
                     decoration: InputDecoration(
-                      hintText: 'Enter the phone number',
+                      hintText: 'Enter the otp',
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: const BorderSide(color: Colors.red)),

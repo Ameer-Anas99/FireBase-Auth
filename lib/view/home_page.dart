@@ -84,9 +84,11 @@ class _HomePageState extends State<HomePage> {
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
                         final post = snapshot.data!.docs[index];
+                        final userEmail =
+                            post["UserEmail"] as String? ?? "Unknown";
                         return PostPage(
                           message: post["Message"],
-                          user: post["UserEmail"],
+                          user: userEmail,
                           postId: post.id,
                           likes: List<String>.from(post['Likes'] ?? []),
                         );
@@ -128,7 +130,7 @@ class _HomePageState extends State<HomePage> {
 
             // logged in as
             Text(
-              "Logged in as:${currentUser.email!}",
+              "Logged in as:${currentUser!.email ?? 'Unknow'}",
               style: const TextStyle(
                   color: Colors.black,
                   fontSize: 15,

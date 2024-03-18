@@ -1,5 +1,6 @@
 import 'package:chat_app/components/list_tile.dart';
 import 'package:chat_app/controller/auth_provider.dart';
+import 'package:chat_app/view/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,6 +46,13 @@ class MyDrawer extends StatelessWidget {
                 text: "L o g o u t",
                 onTap: () {
                   authprovider.signOutLogin();
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginPage(
+                          onTap: () {},
+                        ),
+                      ));
                   onSignOut?.call();
                 }),
           )
